@@ -9,6 +9,15 @@ const Form = ({ initial = {}, onChange, ...props }) => (
     {({ value: values, set }) =>
       renderProps(props, {
         values,
+
+        setValues: nextValues =>
+          set(prev => ({
+            ...prev,
+            ...(typeof nextValues === 'function'
+              ? nextValues(prev)
+              : nextValues),
+          })),
+
         field: id => {
           const value = values[id]
           const setValue = updater =>

@@ -220,7 +220,8 @@ const noop = () => null
 {
   const isNumber = (value: number): number => value
 
-  const render = ({ field }) => {
+  const render = ({ values, setValues, field }) => {
+    ;(values.a: string)
     const a = field('a')
     ;(a.value: string)
     ;(a.bind.value: string)
@@ -253,6 +254,16 @@ const noop = () => null
 
     // $FlowFixMe
     const d = field('d')
+
+    setValues({ a: 'new' })
+    setValues({ a: 'new', c: { value: 'new' } })
+    setValues(({ a }) => ({ a }))
+    // $FlowFixMe
+    setValues({ wrong: 'value' })
+    // $FlowFixMe
+    setValues(({ a }) => ({ d: a }))
+    // $FlowFixMe
+    setValues(({ d }) => ({ a: d }))
   }
   const onChange = data => {
     ;(data.a: string)
